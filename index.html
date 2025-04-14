@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Interactive Form</h1>
+    <form id="userForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <span id="nameError" class="error"></span>
+        <br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <span id="emailError" class="error"></span>
+        <br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <p id="successMessage" style="color: green; display: none;">Form submitted successfully!</p>
+
+    <script>
+        // Add event listener for form submission
+        document.getElementById('userForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form from submitting
+
+            // Clear previous error messages
+            document.getElementById('nameError').textContent = '';
+            document.getElementById('emailError').textContent = '';
+
+            let isValid = true;
+
+            // Validate name
+            const name = document.getElementById('name').value;
+            if (name.trim() === '') {
+                document.getElementById('nameError').textContent = 'Name is required.';
+                isValid = false;
+            }
+
+            // Validate email
+            const email = document.getElementById('email').value;
+            if (email.trim() === '') {
+                document.getElementById('emailError').textContent = 'Email is required.';
+                isValid = false;
+            } else if (!/\S+@\S+\.\S+/.test(email)) {
+                document.getElementById('emailError').textContent = 'Invalid email format.';
+                isValid = false;
+            }
+
+            // If valid, show success message
+            if (isValid) {
+                document.getElementById('successMessage').style.display = 'block';
+            }
+        });
+
+        // Add interactive element: Clear success message on input change
+        document.getElementById('userForm').addEventListener('input', function() {
+            document.getElementById('successMessage').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
